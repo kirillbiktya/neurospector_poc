@@ -1,5 +1,5 @@
 from manualCam import *
-from dataSender import sendData
+from dataSender import sendPhoto, sendPhotoLocation
 from time import time, sleep
 import location
 
@@ -32,7 +32,8 @@ def main():
             print('location:', loc)
 
             # send data to server here
-            sendData("http://192.168.1.2:3000/new_data", imagefilePath, loc)
+            uid = sendPhoto("http://192.168.1.2:3000/upload_photo", imagefilePath)
+            sendPhotoLocation("http://172.20.10.12:3000/define_location_for_photo", uid, loc)
     except KeyboardInterrupt:
         location.stop_updates()
         return
